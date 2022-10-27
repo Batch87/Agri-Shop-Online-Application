@@ -1,5 +1,5 @@
 /*********************************************************************
- *    *FILENAME			:     Asoa_main.c
+ *    *FILENAME			:     main.c
  *
  *    *DESCRIPTION              :     This file defines the functions that consists of various subfunctions to perform various operations.
  *
@@ -14,8 +14,8 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-#include "Asoa_header.h"
-#include "admin_maint_func.c"
+#include "../header/header.h"
+#include "../src/func.c"
 /*******************************************************************
  *    *FUNCTION NAME	 : farmer
  *    
@@ -30,10 +30,11 @@
 int farmer()
 {
         int ch=0;
+	system("clear");
         while(ch!=4)
         {
-
-		printf("\n\n-------------------------------------------------------\n");
+                printf("\n");
+		printf("\n\n---------------------   WELCOME TO FARMER MENU   ----------------------------------\n");
                 printf("1.farmer registration\n2.edit farmer details\n3.Show farmer details\n4.Back\n");
  printf("\nEnter choice-");
                 scanf("%d",&ch);
@@ -48,8 +49,10 @@ int farmer()
 			case 4:break;
                         default: printf("Invalid choice\n");
                 }
-                return EXIT_SUCCESS;
+		system("read a");
+	system("clear");
         }
+        return EXIT_SUCCESS;
 }
 /*******************************************************************
  *    *FUNCTION NAME	 : customer
@@ -66,10 +69,11 @@ int farmer()
 int customer()
 {
         int ch=0;
+	system("clear");
         while(ch!=5)
         {
-
-		printf("\n\n-------------------------------------------------------\n");
+                printf("\n");
+		printf("\n\n----------------------   WELCOME TO CUSTOMER MENU   ---------------------------------\n");
                 printf("1.Customer registration\n2.do transaction\n3.Edit customer details\n4.View customer details\n5.Back\n");
                 printf("\nEnter choice-");
                 scanf("%d",&ch);
@@ -86,8 +90,10 @@ int customer()
 			case 5:break;
                         default: printf("Invalid choice\n");
                 }
-                return EXIT_SUCCESS;
+		system("read a");
+	system("clear");
         }
+        return EXIT_SUCCESS;
 }
 /*******************************************************************
  *    *FUNCTION NAME	 : admin
@@ -102,10 +108,11 @@ int customer()
 int admin()
 {
         int ch=0;
-        while(ch!=3)
+	system("clear");
+        while(ch!=4)
         {
-
-		printf("\n\n-------------------------------------------------------\n");
+                printf("\n");
+		printf("\n\n-----------------------   WELCOME TO ADMIN MENU   --------------------------------\n");
                 printf("1.Menu for Farmer\n2.Menu for Customer\n3.Menu for Reports\n4.Back\n");
                 printf("\nEnter choice-");
                 scanf("%d",&ch);
@@ -120,8 +127,10 @@ int admin()
                      case 4:break;
                      default: printf("Invalid choice");
                 }
-                return EXIT_SUCCESS;
+	system("read a");
+	system("clear");
         }
+        return EXIT_SUCCESS;
 }
 /*******************************************************************
  *    *FUNCTION NAME	 : farmer_menu
@@ -139,10 +148,11 @@ int admin()
 int farmer_menu()
 {
         int ch=0;
+	system("clear");
         while(ch!=5)
         {
-
-		printf("\n\n-------------------------------------------------------\n");
+                printf("\n");
+		printf("\n\n-----------------------   WELCOME ADMIN TO FARMER MENU   --------------------------------\n");
                 printf("1.add farmer details\n2.edit farmer details\n3.view farmer details\n4.delete farmer details\n5.back\n");
                 printf("\nEnter choice-");
                 scanf("%d",&ch);
@@ -161,8 +171,11 @@ int farmer_menu()
 		        case 5: break;
                         default: printf("Invalid choice");
                 }
-                return EXIT_SUCCESS;
+		system("read a");
+	system("clear");
         }
+	//system ("clear");
+        return EXIT_SUCCESS;
 }
 /*******************************************************************
  *    *FUNCTION NAME	 : customer_menu
@@ -179,10 +192,12 @@ int farmer_menu()
 int customer_menu()
 {
         int ch=0;
+	system("clear");
+
         while(ch!=5)
         {
-
-		printf("\n\n-------------------------------------------------------\n");
+                printf("\n");
+		printf("\n\n--------------------   WELCOME ADMIN TO CUSTOMER MENU   -------------------------------\n");
                 printf("\n1.add customer details\n2.edit customer details\n3.view customer details\n4.delete customer details\n5.back\n");
                 printf("\nEnter choice-");
                 scanf("%d",&ch);
@@ -199,8 +214,10 @@ int customer_menu()
                         case 5:break;
                         default: printf("Invalid choice");
                 }
-                return EXIT_SUCCESS;
+		system("read a");
+	system("clear");
 	}
+                return EXIT_SUCCESS;
 }
 /*******************************************************************
  *    *FUNCTION NAME	 : main
@@ -222,7 +239,8 @@ int main()
 	system("clear");
         while(ch!=4)
         {
-		printf("\n\n-------------------------------------------------------\n");
+		printf("\n");
+		printf("\n\n---------------------   WELCOME TO ASOA   -----------------------------------\n");
                 printf("1.Farmer\n2.Customer\n3.Admin\n4.Exit\n");
                 printf("\nEnter choice-");
                 scanf("%d",&ch);
@@ -241,12 +259,14 @@ int main()
 	list_to_farmer();
 	list_to_customer();
 	list_to_transaction();
+	system("read a");
 	system("clear");
 	printf("\n\n\n--------    THANK YOU FOR USING ASOA    --------\n\n\n");
         return EXIT_SUCCESS;
 }
 
 /*-------------------------------------------END OF THE MAIN MENU----------------------------------------------------------------*/
+
 
 
 

@@ -1,5 +1,5 @@
-#ifndef ASOA_HEADER_H
-#define ASOA_HEADER_H
+#ifndef HEADER_H
+#define HEADER_H
 #define MAX 20
 
 

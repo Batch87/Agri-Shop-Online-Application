@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Asoa_header.h"
-#include "validations.c"
+#include "../header/header.h"
+#include "../src/validations.c"
 /*******************************************************************************************
  *
  *   *FUNCTION NAME  :  farmer_registrtion
@@ -239,12 +239,12 @@ int show_farmer()                                              //show farmer fun
 		return EXIT_FAILURE;
 	}
 
-	printf("\nAADHAR NO.     NAME      PHONE NO.    PASSWORD    CATEGORY    ITEM_NAME    QUANTITY   PRICE  \n");
+	printf("\nAADHAR NO.            NAME        PHONE NO.        PASSWORD         CATEGORY       ITEM_NAME     QUANTITY   PRICE  \n");
 	for(ptr=start;(ptr);ptr=ptr->next) 
 	{
 		for(int i=0;i<ptr->code;i++)
 		{
-			printf("\n%3lld    %5s    %6ld  %10s  %12s   %15s  %20d  %20d   \n",ptr->farmerAadhar,ptr->farmerName,ptr->phoneno,ptr->password,ptr->category,ptr->item[i],ptr->quantity[i],ptr->price[i]);
+			printf("\n%lld    %4s    %4lld  %3s  %3s   %3s  %3d  %3d   \n",ptr->farmerAadhar,ptr->farmerName,ptr->phoneno,ptr->password,ptr->category,ptr->item[i],ptr->quantity[i],ptr->price[i]);
 		}
 	}
 	return EXIT_SUCCESS;
@@ -314,7 +314,7 @@ int farmer_to_list()                                                         //f
 
 	FILE *p;
 	ftt f1;
-	if((p=fopen("Farmer.data","rb"))==NULL)
+	if((p=fopen("../data/Farmer.data","rb"))==NULL)
 	{
 		printf("\nFile is not there to read from\n");
 		return EXIT_FAILURE;
@@ -352,7 +352,7 @@ int farmer_to_list()                                                         //f
 		}
 		fread(&f1,sizeof(ftt),1,p);
 	}
-	//free(new);
+//	free(new);
 	fclose(p);
 	return EXIT_SUCCESS;
 }                                                                            //farmer to list function ends here....
@@ -377,7 +377,7 @@ int list_to_farmer()                                                        //li
 		return EXIT_FAILURE;
 	}
 	FILE *p1;
-	if((p1=fopen("Farmer.data","wb"))==NULL)
+	if((p1=fopen("../data/Farmer.data","wb"))==NULL)
 	{
 		printf("\nFile is not there to read from\n");
 		return EXIT_FAILURE;
@@ -399,7 +399,7 @@ int list_to_farmer()                                                        //li
 		fwrite(&f2,sizeof(ftt),1,p1);
 	}
 	fclose(p1);
-	//free(ptr);
+//	free(ptr);
 	return EXIT_SUCCESS;
 }                                                                                   //list to farmer function ends here....
 
@@ -516,101 +516,102 @@ int do_transaction()                                                   //do tran
 		for(ptr1=start1;(ptr1);ptr1=ptr1->next1)
 		{
 			if(ptr1->customerAadhar!=new2->custAadhar)
-			{
-				printf("please enter valid number");
-				continue;
-				// return EXIT_FAILURE;
-			}
+                              {
+				      printf("Enter valid aadhar number.");
+				      continue;
+			      }
 			else
 			{
 				printf("Adhar verification has been successful\n");
-				printf("---Start the shopping---\n");
+			        printf("---Start the shopping---\n");
 				break;
 			}
 		}
 		break;
 	}
-	printf("\n--------------------------------------------\n");
-	printf("Enter number of items you want to buy-");
-	while(1)
-	{
-	scanf("%d",&n);
-	if(n<1 || n>3)
-	{
-		printf("enter the items between 1-3\n");
-		continue;
-	}
-	else
-		break;
-	break;
-	}
-	new2->num=n;
-	new2->total_cost=0;
-	for(int i=0;i<n;i++)
-	{
-		while(1)
-		{
-			printf("Enter the item name you want to buy-");
-			scanf("%s",new2->product[i]);
-			for(ptr=start;(ptr);ptr=ptr->next)
+			printf("\n--------------------------------------------\n");
+			printf("Enter number of items you want to buy-");
+			while(1)
 			{
-				for(int i=0;i<n;i++)
+				scanf("%d",&n);
+				if(n<1 || n>3)
 				{
-					if(strcmp(ptr->item[i],new2->product[i])==0)
-					{
-						printf("\nAadhar    Name    Item     quantity     Unit_Price\n\n");
-						printf("%lld     %s    %s     %d    %d\n",ptr->farmerAadhar,ptr->farmerName,ptr->item[i],ptr->quantity[i],ptr->price[i]);
-					}
-									break;
+					printf("enter the items between 1-3\n");
+					continue;
 				}
+				else
+					break;
+				break;
 			}
-			printf("\n Enter the aadhar number of whose product you want to buy-");
-			scanf("%lld",&new2->farmAadhar);
-			for(ptr=start;(ptr);ptr=ptr->next)
+			new2->num=n;
+			new2->total_cost=0;
+			for(int i=0;i<n;i++)
 			{
-				for(int i=0;i<n;i++)
+				while(1)
 				{
-					if((ptr->farmerAadhar==new2->farmAadhar) && (strcmp(ptr->item[i],new2->product[i])==0))
+					printf("Enter the item name you want to buy-");
+					scanf("%s",new2->product[i]);
+					for(ptr=start;(ptr);ptr=ptr->next)
 					{
-						new2->amount[0]=0;
-						printf("Enter the quantity you want to buy-");
-						scanf("%d",&new2->qty);
-						new2->cost[i]=ptr->price[i];
-						new2->amount[i]=new2->amount[i]+(new2->qty*ptr->price[i]);
-						ptr->quantity[i]=ptr->quantity[i]-new2->qty;
-						printf("Total price is-%d\n",new2->amount[i]);
+						for(int i=0;i<n;i++)
+						{
+							if(strcmp(ptr->item[i],new2->product[i])==0)
+							{
+								printf("\nAadhar         Name    Item     quantity    Unit_Price\n\n");
+								printf("%lld     %4s    %5s     %4d    %4d\n",ptr->farmerAadhar,ptr->farmerName,ptr->item[i],ptr->quantity[i],ptr->price[i]);
+							}
+							break;
+						}
 					}
-					
-				}
-			}
-			break;
-		}
+					printf("\n Enter the aadhar number of whose product you want to buy-");
+					scanf("%lld",&new2->farmAadhar);
+					for(ptr=start;(ptr);ptr=ptr->next)
+					{
+						for(int i=0;i<n;i++)
+						{
+							if((ptr->farmerAadhar==new2->farmAadhar) && (strcmp(ptr->item[i],new2->product[i])==0))
+							{
+								new2->amount[0]=0;
+								printf("Enter the quantity you want to buy-");
+								scanf("%d",&new2->qty);
+								new2->cost[i]=ptr->price[i];
+								new2->amount[i]=new2->amount[i]+(new2->qty*ptr->price[i]);
+								ptr->quantity[i]=ptr->quantity[i]-new2->qty;
+								printf("Total price is-%d\n",new2->amount[i]);
+							}
 
-		new2->total_cost=new2->total_cost+new2->amount[i];	
-	}
-	printf("Total price of the items-%d\n",new2->total_cost);
-	printf("Enter the amount to pay: ");
-	scanf("%d",&amt);
-	if(new2->total_cost==amt)
-	{
-		printf("Your Transaction is Successfull.");
-	}
-	if(!start2)
-	{
-		start2=new2;
-		new2->next2=NULL;
-	}
-	else if(new2->custAadhar < start2->custAadhar)
-	{
-		new2->next2=start2;
-		start2=new2;
-	}
-	else
-	{
-		for(ptr2=start2;(ptr2) && ptr2->custAadhar<new2->custAadhar;prev2=ptr2,ptr2=ptr2->next2);
-		prev2->next2=new2;
-		new2->next2=ptr2;
-	}
+						}
+					}
+					break;
+				}
+
+				new2->total_cost=new2->total_cost+new2->amount[i];	
+			
+			printf("Total price of the items-%d\n",new2->total_cost);
+			printf("Enter the amount to pay: ");
+			scanf("%d",&amt);
+			if(new2->total_cost==amt)
+			{
+				printf("Your Transaction is Successfull.");
+			}
+			}
+                 	if(!start2)
+			{
+				start2=new2;
+				new2->next2=NULL;
+			}
+			else if(new2->custAadhar < start2->custAadhar)
+			{
+				new2->next2=start2;
+				start2=new2;
+			}
+			else
+			{
+				for(ptr2=start2;(ptr2) && ptr2->custAadhar<new2->custAadhar;prev2=ptr2,ptr2=ptr2->next2);
+				prev2->next2=new2;
+				new2->next2=ptr2;
+			}
+	
 	return EXIT_FAILURE;
 }                                                                         //do transaction function ends here....
 
@@ -673,10 +674,10 @@ int show_customer_details()                                              //show 
 		printf("\nEmpty List\n");
 		return EXIT_FAILURE;
 	}
-	printf("\n   AADHARNUM     NAME     PHONENUM      ADDRESS   \n");
+	printf("\n AADHARNUM           NAME          PHONENUM         ADDRESS   \n");
 	for(ptr1=start1;(ptr1);ptr1=ptr1->next1)
 	{
-		printf("\n %5lld     %10s      %3lld       %10s   ",ptr1->customerAadhar,ptr1->customerName,ptr1->phoneno,ptr1->address);
+		printf("\n%lld     %2s      %3lld       %3s   ",ptr1->customerAadhar,ptr1->customerName,ptr1->phoneno,ptr1->address);
 
 	}
 	return EXIT_SUCCESS;              
@@ -727,7 +728,7 @@ int delete_customer_data()						    //delete customer function starts here.
 		free(ptr1);
 	}
 	return EXIT_SUCCESS;
-}									     //delete customers function ends here....
+}									   //delete customers function ends here....
 
 
 /*******************************************************************************************
@@ -741,12 +742,12 @@ int delete_customer_data()						    //delete customer function starts here.
  *
  *******************************************************************************************/
 
-int customer_to_list()                                                      //customer to list function starts here....
+int customer_to_list()                                                 //customer to list function starts here....
 {
 
 	FILE *cp;
 	ctt c1;
-	if((cp=fopen("Customer.data","rb"))==NULL)
+	if((cp=fopen("../data/Customer.data","rb"))==NULL)
 	{
 		printf("\nFile is not present to read from\n");
 		return EXIT_FAILURE;
@@ -780,21 +781,20 @@ int customer_to_list()                                                      //cu
 	//free(new1);
 	fclose(cp);
 	return EXIT_SUCCESS;
-}
+}                                                                //customer to list function ends here....
 
-/* ---------- List to File for Customer Details----------*/
 /*******************************************************************************************
  *
- *   *FUNCTION NAME  :  list_farmer
+ *   *FUNCTION NAME  :  list_customer
  *
- *   *DESCRIPTION    :  This functions is used here to transfer the datas of the farmer from 
- *                           the list to the farmer file.
+ *   *DESCRIPTION    :  This functions is used here to transfer the datas of the customer from 
+ *                           the list to the customer file.
  *
  *   *RETURNS        :  No Returns
  *
  *******************************************************************************************/
 
-int list_to_customer()
+int list_to_customer()                                           //list to customer function starts here....
 {
 	ctt c2;
 	if(!start1)
@@ -803,7 +803,7 @@ int list_to_customer()
 		return EXIT_FAILURE;
 	}
 	FILE *cp1;
-	if((cp1=fopen("Customer.data","wb"))==NULL)
+	if((cp1=fopen("../data/Customer.data","wb"))==NULL)
 	{
 		printf("\nFile is not present to read \n");
 		return EXIT_FAILURE;
@@ -819,21 +819,20 @@ int list_to_customer()
 	fclose(cp1);
 	//free(ptr1);
 	return EXIT_SUCCESS;
-}
+}                                                                 //list to customer function ends here
 
 /*******************************************************************************************
  *
- *   *FUNCTION NAME  :  list_farmer
+ *   *FUNCTION NAME  :  farmer_report
  *
- *   *DESCRIPTION    :  This functions is used here to transfer the datas of the farmer from 
- *                           the list to the farmer file.
+ *   *DESCRIPTION    :  This functions is used to generate the sales report for a particular farmer.
  *
  *   *RETURNS        :  No Returns
  *
  *******************************************************************************************/
 
 
-int farmer_report()
+int farmer_report()                                                 //farmer report function starts here......
 {
 	long long int aadharnum;
 	if(!start2)
@@ -841,44 +840,45 @@ int farmer_report()
 		printf("Empty List");
 		return EXIT_FAILURE;
 	}
-	printf("Enter The Aadhar Number of Whose Report you want: ");
+	printf("Enter The Aadhar Number of farmer: ");
 	while(1)
 	{
 		scanf("%lld",&aadharnum);
 		for(ptr2=start2;(ptr2);ptr2=ptr2->next2)
 		{
 
+			printf("\nAADHAR NUMBER       ITEM NAME        QUANTITY     UNIT PRICE     COST\n");
 			for(int i=0;i<ptr2->num;i++)
 			{
 				if(ptr2->farmAadhar==aadharnum)
 				{
-					printf("\nAADHAR NUMBER     ITEM NAME     QUANTITY      UNIT PRICE     COST\n");
-					printf("     %lld          %s         %d    %d    %d\n",ptr2->farmAadhar, ptr2->product[i],ptr2->qty,ptr2->cost[i],ptr2->amount[i]);
+					printf(" %lld  %4s  %5d    %5d    %5d\n",ptr2->farmAadhar, ptr2->product[i],ptr2->qty,ptr2->cost[i],ptr2->amount[i]);
 				}
 				else
-				{
-					printf("Enter valid Aadhar number");
-					break;
-				}
+				printf("No sales from the particular farmer.");
+			
+				break;
 			}
+			break;
 		}
 		break;
+
 	}
 	return EXIT_SUCCESS;
-}
+}                                                               //farmer report functioon ends here....
 
 /*******************************************************************************************
  *
- *   *FUNCTION NAME  :  list_farmer
+ *   *FUNCTION NAME  :  consolidated_transaction_report
  *
- *   *DESCRIPTION    :  This functions is used here to transfer the datas of the farmer from 
- *                           the list to the farmer file.
+ *   *DESCRIPTION    :  This functions is used to generate the the total transaction details                  
+ *                          of the purchase made by customer
  *
  *   *RETURNS        :  No Returns
  *
  *******************************************************************************************/
 
-int consolidated_transaction_report()
+int consolidated_transaction_report()                             //consolidated transacrtion report function starts here
 {
 
 	if(!start2)
@@ -886,18 +886,18 @@ int consolidated_transaction_report()
 		printf("\nThe List is Empty\n");
 		return EXIT_FAILURE;
 	}
+		printf("\n FARMER AADHAR    CUSTOMER AADHAR  ITEM NAME    QUANTITY   UNIT PRICE    AMOUNT  \n");
 	for(ptr2=start2;(ptr2);ptr2=ptr2->next2) 
 	{
-		printf("\n FARMER AADHAR    CUSTOMER AADHAR  ITEM NAME    QUANTITY   UNIT PRICE    AMOUNT  \n");
 		for(int i=0;i<ptr2->num;i++)
 		{
-			printf("\n%lld  %lld     %3s  %3d    %d     %d \n",ptr2->farmAadhar,ptr2->custAadhar,ptr2->product[i], ptr2->qty,ptr2->cost[i],ptr2->amount[i]);
+			printf("\n%lld  %lld     %3s  %3d    %3d     %3d \n",ptr2->farmAadhar,ptr2->custAadhar,ptr2->product[i], ptr2->qty,ptr2->cost[i],ptr2->amount[i]);
 		}
 		printf("\n");
 	}
 
 	return EXIT_SUCCESS;
-}									      //view customer function ends here.
+}				                //consolidated transaction report function ends here.
 
 
 
@@ -916,9 +916,12 @@ int consolidated_transaction_report()
 int reports_menu()
 {
 	int ch=0;
+	system("clear");
 	while(ch!=3)
 	{
-		printf("1.farmer report\n2.transcation report\n3.back");
+		printf("\n");
+		printf("\n------------------------------  WELCOME ADMIN TO REPORT MENU   ---------------------------------\n");
+		printf("\n1.farmer report\n2.transcation report\n3.back\n");
 		printf("\nEnter choice-");
 		scanf("%d",&ch);
 		switch(ch)
@@ -927,30 +930,32 @@ int reports_menu()
 				break;
 			case 2: consolidated_transaction_report();
 				break;
-			case 3:break;
+			case 3: break;
 			default: printf("Invalid choice");
 		}
+		system("read a");
+              system("clear");
 	}
 	return EXIT_SUCCESS;
 }
 
 /*******************************************************************************************
  *
- *   *FUNCTION NAME  :  list_farmer
+ *   *FUNCTION NAME  :  transaction to list 
  *
- *   *DESCRIPTION    :  This functions is used here to transfer the datas of the farmer from 
- *                           the list to the farmer file.
+ *   *DESCRIPTION    :  This functions is used here to transfer the datas of the transactions from 
+ *                           the transaction file to the list.
  *
  *   *RETURNS        :  No Returns
  *
  *******************************************************************************************/
 
-int transaction_to_list()
+int transaction_to_list()                                            //transaction to list function starts here....
 {
 
 	FILE *pr;
 	ptt p1;
-	if((pr=fopen("Transaction.data","rb"))==NULL)
+	if((pr=fopen("../data/Transaction.data","rb"))==NULL)
 	{
 		printf("\nFile is not there to read from\n");
 		return EXIT_FAILURE;
@@ -990,14 +995,14 @@ int transaction_to_list()
 	free(new2);
 	fclose(pr);
 	return EXIT_SUCCESS;
-}
+}                                                                       //transaction to list function ends here....
 
 /*******************************************************************************************
  *
- *   *FUNCTION NAME  :  list_farmer
+ *   *FUNCTION NAME  :  list_to_transaction
  *
- *   *DESCRIPTION    :  This functions is used here to transfer the datas of the farmer from 
- *                           the list to the farmer file.
+ *   *DESCRIPTION    :  This functions is used here to transfer the datas of the transactions from 
+ *                           the list to the transactiion file.
  *
  *   *RETURNS        :  No Returns
  *
@@ -1012,7 +1017,7 @@ int list_to_transaction()                                              //list to
 		return EXIT_FAILURE;
 	}
 	FILE *pr;
-	if((pr=fopen("Transaction.data","wb"))==NULL)
+	if((pr=fopen("../data/Transaction.data","wb"))==NULL)
 	{
 		printf("\nFile is not there to read from\n");
 		return EXIT_FAILURE;
@@ -1038,4 +1043,8 @@ int list_to_transaction()                                              //list to
 	return EXIT_SUCCESS;
 }                                                                          //list to file transactionfunction ends here....
 
+
+
+
 /*---------------------------------------------END OF THE FUNCTIONS FILE--------------------------------------------------------*/
+

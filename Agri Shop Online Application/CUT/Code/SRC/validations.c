@@ -2,7 +2,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include<ctype.h>
-#include "Asoa_header.h"
+#include "../header/header.h"
 
 
 int validate_name(char *str)
@@ -90,4 +90,5 @@ int validate_password(char *str)
 	else
 	return 0;
 }
+
 
